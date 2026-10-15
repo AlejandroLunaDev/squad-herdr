@@ -2,7 +2,7 @@
 
 A Claude Code plugin marketplace that opens a squad of role-based Claude Code sessions in one [herdr](https://herdr.dev) tab. Each session plays one role: the orquestador plans the task, the implementador writes the code, the revisor reviews the pull request, and a few more join on demand. One command, `/squad`, splits the tab into one pane per role and starts every session in its pane.
 
-<!-- Image placeholder: docs/squad-tab.png, a herdr tab with the orquestador and implementador panes open. -->
+![The squad launcher: the role menu, then one Claude Code session per role in the herdr tab](docs/squad-up.gif)
 
 ## Requirements
 
@@ -42,6 +42,8 @@ Installing `squad` also installs and enables its two dependencies, the mods `cac
 | `cache-clock` | A countdown ring showing how long the prompt cache stays warm, the last turn's cache tokens and, on a subscription, the usage windows. |
 | `token-weather` | A forecast of the context window: a weather icon, the fill percentage and a chart of the last turns. |
 
+![The cache-clock and token-weather bands above the prompt](docs/mods-band.png)
+
 ## Usage
 
 Run `/squad` in a Claude Code session that runs inside a herdr pane:
@@ -54,7 +56,7 @@ Run `/squad` in a Claude Code session that runs inside a herdr pane:
 
 Each role opens in its own pane, as a session named `<tab>-<role>`. Charla gets a full-height column on the left; the other roles fill a grid to its right. The pane that ran `/squad` closes last, once every role is running.
 
-<!-- Image placeholder: docs/squad-menu.png, the fzf role menu over the launcher pane. -->
+![A squad of orquestador, implementador and revisor in one herdr tab](docs/squad.png)
 
 ### From a plain terminal
 
@@ -72,6 +74,8 @@ On Windows, run it from Git Bash. From PowerShell, a plain `bash` can resolve to
 ```
 
 The script starts the installed `squad:<role>` agents, so the plugin must be installed as well. Without fzf it opens orquestador and implementador.
+
+![The fzf role menu, with orquestador and implementador marked](docs/role-menu.png)
 
 ## Roles
 
