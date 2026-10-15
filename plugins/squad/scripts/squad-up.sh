@@ -52,9 +52,9 @@ if [ $# -eq 0 ]; then
         --color='bg+:-1,marker:bright-green,pointer:bright-cyan,prompt:cyan,border:bright-black,label:bright-white,footer:bright-black' \
         --bind 'load:pos(1)+toggle+pos(2)+toggle+first') || rc=$?
     herdr pane zoom "$HERDR_PANE_ID" --off >/dev/null
+    # One role per line, split into the arguments on purpose.
+    # shellcheck disable=SC2086
     case $rc in
-      # One role per line, split into the arguments on purpose.
-      # shellcheck disable=SC2086
       0) set -- $picked ;;
       1 | 130) exit 0 ;; # 1: Enter with nothing to pick; 130: Esc
       *) echo "fzf exited $rc, opening orquestador implementador" >&2 ;;
