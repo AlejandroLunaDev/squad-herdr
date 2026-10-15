@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# A stand-in for herdr: appends each call to $HERDR_STUB_LOG and answers the two calls
+# squad-up.sh reads in herdr's one-line JSON. Split n returns the pane id pn.
+echo "$*" >>"$HERDR_STUB_LOG"
+case "$1 $2" in
+  "tab get") echo '{"id":"cli:tab:get","result":{"tab":{"label":"try","tab_id":"tab"},"type":"tab_info"}}' ;;
+  "pane split")
+    n=$(grep -c '^pane split' "$HERDR_STUB_LOG")
+    echo "{\"id\":\"cli:pane:split\",\"result\":{\"pane\":{\"pane_id\":\"p$n\",\"tab_id\":\"tab\"},\"type\":\"pane_info\"}}"
+    ;;
+esac
