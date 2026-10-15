@@ -36,3 +36,17 @@ jobs:
 
       - name: Lint the launcher script
         run: shellcheck plugins/squad/scripts/*.sh
+
+  launcher:
+    # /bin/bash is bash 3.2 on macOS, the oldest bash the launcher supports.
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run the launcher against a stub herdr
+        run: |
+          /bin/bash --version | head -n 1
+          /bin/bash tests/squad-up/run.sh /bin/bash
