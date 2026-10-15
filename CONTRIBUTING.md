@@ -27,6 +27,17 @@ The scope is the plugin the commit changes: `feat(squad): ...`, `fix(cache-clock
 - The prerelease bump starts after the first release, `0.1.0`. Until then each plugin.json stays at `0.1.0` and `.release-please-manifest.json` stays at `0.0.0` on purpose, so release-please's first release is `0.1.0`.
 - release-please sets the final version (`0.2.0`) on `main`, in the release pull request, and writes the plugin's `CHANGELOG.md`.
 
+## Releases
+
+A ruleset protects `main`, admins included: a change reaches it only through a pull request whose CI checks pass on a branch that is up to date with `main`.
+
+1. Open a pull request from `dev` to `main`. Merge it with a merge commit, not a squash, so every Conventional Commit reaches `main` for release-please.
+2. release-please opens a release pull request on `main`. Its CI checks run because release-please uses the `RELEASE_PLEASE_TOKEN` secret, a fine-grained personal access token. A pull request opened with the default `GITHUB_TOKEN` starts no workflow, so it would never pass the ruleset.
+3. Merge the release pull request. release-please tags each released plugin and publishes its GitHub release.
+4. Merge `main` back into `dev` with a merge commit. `main` now holds commits that `dev` lacks, and the next pull request from `dev` must be up to date with `main`.
+
+`RELEASE_PLEASE_TOKEN` has an expiry date. Renew the token before it expires and update the secret.
+
 ## Checks
 
 CI runs these on every push and pull request to `dev` and `main`, with a pinned Claude Code version. Run them before you push:
