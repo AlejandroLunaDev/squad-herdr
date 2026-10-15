@@ -23,9 +23,9 @@ The scope is the plugin the commit changes: `feat(squad): ...`, `fix(cache-clock
 ## Versioning
 
 - The version lives in each plugin's `.claude-plugin/plugin.json`, and only there. A marketplace entry never carries a version.
-- Every pull request to `dev` bumps each plugin it touches to a prerelease of the next version: `0.2.0-dev.1`, then `0.2.0-dev.2`, and so on.
-- The prerelease bump starts after the first release, `0.1.0`. Until then each plugin.json stays at `0.1.0` and `.release-please-manifest.json` stays at `0.0.0` on purpose, so release-please's first release is `0.1.0`.
-- release-please sets the final version (`0.2.0`) on `main`, in the release pull request, and writes the plugin's `CHANGELOG.md`.
+- Every pull request to `dev` bumps each plugin it touches to a prerelease of the next version: `1.1.0-dev.1`, then `1.1.0-dev.2`, and so on.
+- The first release was `1.0.0`. release-please ignores a `0.0.0` entry in `.release-please-manifest.json`, so a plugin with no earlier release falls back to the default initial version, `1.0.0`. Since then release-please records each released version in the manifest; do not edit it by hand.
+- release-please sets the final version (`1.1.0`) on `main`, in the release pull request, and writes the plugin's `CHANGELOG.md`.
 
 ## Releases
 
