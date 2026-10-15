@@ -10,7 +10,8 @@ Not included: the screenshots/ folder that README.md links to, which was not in 
 this folder was taken from, and the .claude-plugin/types/ folder, which Claude Code
 generates each time it loads the mod.
 
-From the first release on, the release process of squad-herdr manages the "version"
-field of .claude-plugin/plugin.json. No other file in this folder is changed.
+From the first release on, the release process of squad-herdr sets the "version" field
+of .claude-plugin/plugin.json and writes CHANGELOG.md in this folder. No other file in
+this folder is changed.
 
 This NOTICE file was added by squad-herdr. squad-herdr is not affiliated with Anthropic.
