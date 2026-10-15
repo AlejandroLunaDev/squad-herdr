@@ -65,6 +65,12 @@ git clone https://github.com/AlejandroLunaDev/squad-herdr.git
 bash squad-herdr/plugins/squad/scripts/squad-up.sh
 ```
 
+On Windows, run it from Git Bash. From PowerShell, a plain `bash` can resolve to WSL (`C:\Windows\system32\bash.exe`), so call Git Bash by its path:
+
+```powershell
+& 'C:\Program Files\Git\bin\bash.exe' squad-herdr/plugins/squad/scripts/squad-up.sh
+```
+
 The script starts the installed `squad:<role>` agents, so the plugin must be installed as well. Without fzf it opens orquestador and implementador.
 
 ## Roles
