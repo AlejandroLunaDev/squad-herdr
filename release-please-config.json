@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "simple",
+  "include-component-in-tag": true,
+  "packages": {
+    "plugins/squad": {
+      "component": "squad",
+      "extra-files": [{ "type": "json", "path": ".claude-plugin/plugin.json", "jsonpath": "$.version" }]
+    },
+    "plugins/cache-clock": {
+      "component": "cache-clock",
+      "extra-files": [{ "type": "json", "path": ".claude-plugin/plugin.json", "jsonpath": "$.version" }]
+    },
+    "plugins/token-weather": {
+      "component": "token-weather",
+      "extra-files": [{ "type": "json", "path": ".claude-plugin/plugin.json", "jsonpath": "$.version" }]
+    }
+  }
+}

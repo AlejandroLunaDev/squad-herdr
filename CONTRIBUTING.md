@@ -1,0 +1,56 @@
+# Contributing
+
+Work goes to `dev` through a pull request; `main` only receives releases.
+
+## Quick path
+
+1. Branch from `dev`: `<type>/<issue#>-<slug>`, for example `fix/12-squad-pane-ratio`.
+2. Make the change and commit it with [Conventional Commits](https://www.conventionalcommits.org/).
+3. Bump the version of every plugin you touched (see Versioning).
+4. Run the checks below, then open a pull request to `dev`.
+
+## Branches and channels
+
+| Branch | What it is | Marketplace |
+|--------|------------|-------------|
+| `main` | Released versions | `squad-herdr` (`.claude-plugin/marketplace.json`) |
+| `dev` | The next release, integrated | `squad-herdr-dev` (`channels/dev/marketplace.json`) |
+
+## Commits
+
+The scope is the plugin the commit changes: `feat(squad): ...`, `fix(cache-clock): ...`. Changes to the marketplace files use `marketplace`; `ci`, `docs` and `chore` commits that touch no plugin take no scope. release-please builds each plugin's changelog from these messages.
+
+## Versioning
+
+- The version lives in each plugin's `.claude-plugin/plugin.json`, and only there. A marketplace entry never carries a version.
+- Every pull request to `dev` bumps each plugin it touches to a prerelease of the next version: `0.2.0-dev.1`, then `0.2.0-dev.2`, and so on.
+- The prerelease bump starts after the first release, `0.1.0`. Until then each plugin.json stays at `0.1.0` and `.release-please-manifest.json` stays at `0.0.0` on purpose, so release-please's first release is `0.1.0`.
+- release-please sets the final version (`0.2.0`) on `main`, in the release pull request, and writes the plugin's `CHANGELOG.md`.
+
+## Releases
+
+A ruleset protects `main`, admins included: a change reaches it only through a pull request whose CI checks pass on a branch that is up to date with `main`.
+
+1. Open a pull request from `dev` to `main`. Merge it with a merge commit, not a squash, so every Conventional Commit reaches `main` for release-please.
+2. release-please opens a release pull request on `main`. Its CI checks run because release-please uses the `RELEASE_PLEASE_TOKEN` secret, a fine-grained personal access token. A pull request opened with the default `GITHUB_TOKEN` starts no workflow, so it would never pass the ruleset.
+3. Merge the release pull request. release-please tags each released plugin and publishes its GitHub release.
+4. Merge `main` back into `dev` with a merge commit. `main` now holds commits that `dev` lacks, and the next pull request from `dev` must be up to date with `main`.
+
+`RELEASE_PLEASE_TOKEN` has an expiry date. Renew the token before it expires and update the secret.
+
+## Checks
+
+CI runs these on every push and pull request to `dev` and `main`, with a pinned Claude Code version. Run them before you push:
+
+```bash
+claude plugin validate --strict .
+claude plugin validate --strict channels/dev/marketplace.json
+for plugin in plugins/*/; do claude plugin validate --strict "$plugin"; done
+shellcheck plugins/squad/scripts/*.sh
+```
+
+`--strict` fails on any warning, so a plugin.json needs `name`, `version`, `description` and `author`.
+
+## Vendored code
+
+`plugins/token-weather` is vendored from claude-code-playground under Apache-2.0. Leave its files as they are: the release process only sets the `version` field of its plugin.json and writes its `CHANGELOG.md`. A change to the mod itself belongs upstream.

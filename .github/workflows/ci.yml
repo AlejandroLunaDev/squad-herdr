@@ -1,0 +1,52 @@
+name: ci
+
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: [dev, main]
+
+permissions:
+  contents: read
+
+env:
+  # The Claude Code version the plugins are validated with. Raise it on purpose.
+  CLAUDE_CODE_VERSION: 2.1.295
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Claude Code
+        run: npm install --global "@anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}"
+
+      - name: Validate the marketplaces and plugins
+        run: |
+          claude plugin validate --strict .
+          claude plugin validate --strict channels/dev/marketplace.json
+          for plugin in plugins/*/; do
+            claude plugin validate --strict "$plugin"
+          done
+
+      - name: Lint the launcher script
+        run: shellcheck plugins/squad/scripts/*.sh
+
+  launcher:
+    # /bin/bash is bash 3.2 on macOS, the oldest bash the launcher supports.
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run the launcher against a stub herdr
+        run: |
+          /bin/bash --version | head -n 1
+          /bin/bash tests/squad-up/run.sh /bin/bash

@@ -1,0 +1,22 @@
+name: release-please
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        with:
+          # A fine-grained token, not GITHUB_TOKEN: a pull request opened with
+          # GITHUB_TOKEN starts no workflow, so the release PR would get no CI
+          # checks and the main ruleset would never let it merge.
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json

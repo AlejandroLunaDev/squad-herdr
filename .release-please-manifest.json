@@ -1,0 +1,5 @@
+{
+  "plugins/squad": "0.0.0",
+  "plugins/cache-clock": "0.0.0",
+  "plugins/token-weather": "0.0.0"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "squad",
+  "version": "0.1.0",
+  "description": "A squad of role-based Claude Code sessions in one herdr tab: orquestador, implementador, revisor, charla, disenador and pm, opened with /squad",
+  "author": { "name": "AlejandroLunaDev" },
+  "license": "MIT",
+  "repository": "https://github.com/AlejandroLunaDev/squad-herdr",
+  "homepage": "https://github.com/AlejandroLunaDev/squad-herdr",
+  "dependencies": ["cache-clock", "token-weather"]
+}
